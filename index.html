@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>受信データ確認</title>
+</head>
+<body>
+    <h1>送信されたデータを確認</h1>
+    <div id="receivedData"></div>
+
+    <script>
+        // URLパラメータを取得する関数
+        function getQueryParams() {
+            const params = {};
+            window.location.search.substring(1).split("&").forEach(pair => {
+                const [key, value] = pair.split("=");
+                params[decodeURIComponent(key)] = decodeURIComponent(value.replace(/\+/g, ' '));
+            });
+            return params;
+        }
+
+        // 受信したデータを表示する関数
+        function displayReceivedData() {
+            const params = getQueryParams();
+            const receivedDataDiv = document.getElementById('receivedData');
+            receivedDataDiv.innerHTML = `
+                <p>名前: ${params.name || 'N/A'}</p>
+                <p>メールアドレス: ${params.email || 'N/A'}</p>
+            `;
+        }
+
+        // ページが読み込まれたときに受信データを表示する
+        document.addEventListener('DOMContentLoaded', displayReceivedData);
+    </script>
+</body>
+</html>
